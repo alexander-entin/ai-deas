@@ -1,0 +1,1 @@
+start "dev" /max npm run dev
