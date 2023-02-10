@@ -11,7 +11,7 @@ import {
 import styles from "./tailwind.css"
 
 let title = `ChatGPT солов'їною`
-let description = 'ChatGPT для України без зайвого клопоту: без VPN, SMS, реэстрації'
+let description = 'ChatGPT для українців без зайвого клопоту - без VPN, SMS, реэстрації'
 let image = 'https://ai-deas.pages.dev/favicon.svg'
 export const meta: MetaFunction = () => ({
 	title,
@@ -39,7 +39,6 @@ export default function App() {
 		<html lang="uk" className="h-screen">
 			<head>
 				<Meta />
-				{/* <style>{`html, body { height: 100% }`}</style> */}
 				<Links />
 			</head>
 			<body className="h-screen bg-white">
