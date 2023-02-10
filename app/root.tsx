@@ -9,10 +9,11 @@ import {
 } from "@remix-run/react"
 
 import styles from "./tailwind.css"
+import logo from "~/../public/logo.png"
 
 let title = `ChatGPT солов'їною`
 let description = 'ChatGPT для українців без зайвого клопоту - без VPN, SMS, реєстрації'
-let image = 'https://ai-deas.pages.dev/logo.png'
+let image = `https://ai-deas.pages.dev${logo}`
 export const meta: MetaFunction = () => ({
 	title,
 	description,
@@ -31,7 +32,7 @@ export const meta: MetaFunction = () => ({
 
 export const links: LinksFunction = () => [
 	{ rel: "stylesheet", href: styles },
-	{ rel: 'icon', href: '/logo.png', type: 'image/png' },
+	{ rel: 'icon', href: logo, type: 'image/png' },
 ]
 
 export default function App() {

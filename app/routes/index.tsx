@@ -12,6 +12,7 @@ import { BiCog, BiSend, BiErrorAlt } from 'react-icons/bi'
 import fetch from '~/tools/fetch'
 import get from '~/tools/get'
 import ThreeDots from '~/components/ThreeDots'
+import logo from "~/../public/logo.svg"
 
 const base = 'https://api.openai.com/v1/'
 export const action = async ({ request, context }: ActionArgs) => {
@@ -177,7 +178,7 @@ export default function Chat({ error }) {
 					<div className="hero">
 						<div className="prose">
 							<h1 className="pt-3">
-								<img src="/logo.svg" className="inline m-0 w-16 h-16" alt="" />
+								<img src={logo} className="inline m-0 w-16 h-16" alt="" />
 								<span className="pl-2">ChatGPT солов'їною</span>
 							</h1>
 							<p>
