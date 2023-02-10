@@ -20,6 +20,7 @@ export const meta: MetaFunction = () => ({
 	'og:title': `ChatGPT солов'їною`,
 	'og:description': description,
 	'og:image': image,
+	'twitter:site': 'AI-deas',
 	'twitter:title': title,
 	'twitter:description': description,
 	'twitter:image': image,
