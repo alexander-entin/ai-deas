@@ -7,7 +7,7 @@ import { json } from '@remix-run/cloudflare'
 import { Form, useActionData, useSubmit, useTransition } from '@remix-run/react'
 import { ClientOnly } from 'remix-utils'
 import Markdown from 'markdown-to-jsx'
-import { BiCog, BiSend, BiErrorAlt } from 'react-icons/bi'
+import { BiCog, BiSend, BiTrash, BiErrorAlt } from 'react-icons/bi'
 
 import fetch from '~/tools/fetch'
 import get from '~/tools/get'
@@ -44,7 +44,7 @@ export const action = async ({ request, context }: ActionArgs) => {
 		model,
 		temperature,
 		stop: ['\nYou:'],
-		max_tokens: 500,
+		max_tokens: 1000,
 		// suffix,
 	}
 	console.log('body', body)
@@ -61,11 +61,17 @@ export const action = async ({ request, context }: ActionArgs) => {
 	return json(result, { status })
 }
 
+let examples = [
+	'Що таке правий лібералізм?',
+	'Розкажи жарт про москаля',
+	'На Python реалізуй функцію, яка рахує, скільки днів залишилось до нового року',
+]
+
 export let ErrorBoundary = Chat
 
 let promptAtom = atom('')
-let logAtom = atom([])
 let lastAtom = atom('')
+let logAtom = atom([{}])
 
 export default function Chat({ error }) {
 	let [prompt, setPrompt] = useAtom(promptAtom)
@@ -100,6 +106,12 @@ export default function Chat({ error }) {
 		}
 	}, [res, setPrompt, setLog, setLast])
 
+	let onExample = prompt => {
+		prettify()
+		setPrompt(prompt)
+		promptRef.current?.focus()
+	}
+
 	let onSubmit = useCallback(() => {
 		let context = log.slice(-8).map(({ you, ai }) =>
 			you ? `You: ${you}` : `AI: ${ai}`
@@ -127,6 +139,8 @@ export default function Chat({ error }) {
 			}
 		}
 	}, [prompt, last, submission, setPrompt, onSubmit])
+
+	let onClear = () => setLog([])
 
 	useEffect(() => {
 		if (error && !res) {
@@ -175,22 +189,49 @@ export default function Chat({ error }) {
 					</div>
 				}
 				<div className="flex-1 overflow-auto">
-					<div className="hero">
-						<div className="prose">
-							<h1 className="pt-3">
-								<img src={logo} className="inline m-0 w-16 h-16" alt="" />
-								<span className="pl-2">ChatGPT солов'їною</span>
-							</h1>
-							<p>
-								OpenAI, розробник ChatGPT, <a href="https://forbes.ua/news/amerikanskiy-openai-poyasniv-chomu-zablokuvav-nadpopulyarniy-shi-servis-chatgpt-dlya-ukraintsiv-18012023-11148">заблокував</a> українцям доступ до свого текстового ШІ-чатботу.
-								Існуючі <a href="https://psm7.com/uk/technology/kak-vospolzovatsya-chatgpt-v-ukraine-obxod-blokirovki-openai.html">способи обходу</a> блокування неідеальні.
-							</p>
-							<p>
-								Тут українці можуть користуватися ChatGPT без зайвого клопоту - без VPN, SMS, реєстрації.
-							</p>
-						</div>
-					</div>
 					<div className="md:container">
+						<div className="chat chat-start">
+							<div className="chat-bubble">
+								<div className="prose">
+									<h1 className="m-2 pt-2">
+										<img src={logo} className="inline m-0 w-16 h-16" alt="" />
+										<span className="pl-4">ChatGPT солов'їною</span>
+									</h1>
+								</div>
+							</div>
+						</div>
+						{log.length > 0 &&
+							<>
+								<div className="chat chat-end">
+									<div className="chat-bubble chat-bubble-secondary">
+										OpenAI, розробник ChatGPT, <a className="link" href="https://forbes.ua/news/amerikanskiy-openai-poyasniv-chomu-zablokuvav-nadpopulyarniy-shi-servis-chatgpt-dlya-ukraintsiv-18012023-11148">заблокував</a> українцям доступ до свого текстового ШІ-чатботу.
+										<br/>
+										Існуючі способи обходу блокування... <a className="link" href="https://psm7.com/uk/technology/kak-vospolzovatsya-chatgpt-v-ukraine-obxod-blokirovki-openai.html">неідеальні</a>. Що робити?
+									</div>
+								</div>
+								<div className="chat chat-start">
+									<div className="chat-bubble">
+										<div className="prose">
+											<p>
+												Тут українці можуть користуватися ChatGPT без зайвого клопоту - без VPN, SMS, реєстрації.
+											</p>
+											Приклади:
+											<ul>
+												{examples.map((x, i) =>
+													<li
+														className="link"
+														onClick={() => onExample(x)}
+														key={i}
+													>
+														{x}
+													</li>
+												)}
+											</ul>
+										</div>
+									</div>
+								</div>
+							</>
+						}
 						{log.map(({ you, ai }, i) =>
 							<Fragment key={i}>
 								{you &&
@@ -202,10 +243,7 @@ export default function Chat({ error }) {
 								}
 								{ai &&
 									<div className="chat chat-start">
-										<div
-											className="chat-bubble"
-											data-theme-="dark"
-										>
+										<div className="chat-bubble">
 											<div className="prose">
 												<Markdown>{ai}</Markdown>
 											</div>
@@ -261,6 +299,14 @@ export default function Chat({ error }) {
 						<BiCog className="w-6 h-6" />
 						<span className="sr-only">Settings</span>
 					</label>
+					<button
+						type="button"
+						className="inline-flex p-2.5 text-neutral-content rounded-full cursor-pointer"
+						onClick={onClear}
+					>
+						<BiTrash className="w-6 h-6" />
+						<span className="sr-only">Clear conversation</span>
+					</button>
 				</div>
 			</div>
 			<div className="drawer-side">
