@@ -40,7 +40,7 @@ export const action = async ({ request, context }: ActionArgs) => {
 	// if (prompt?.endsWith('\nYou: e')) model = 1
 
 	let body = {
-		prompt: `${prompt}. Answer in markdown\nAI:`,
+		prompt: `${prompt} (answer in markdown)\nAI:`,
 		model,
 		temperature,
 		stop: ['\nYou:'],
@@ -63,8 +63,8 @@ export const action = async ({ request, context }: ActionArgs) => {
 
 let examples = [
 	'Що таке правий лібералізм?',
-	'Розкажи жарт про москаля',
-	'На Python реалізуй функцію, яка рахує, скільки днів залишилось до нового року',
+	'Запропонуй 5 кличок для бойового кота',
+	'Реалізуй Python функцію, яка рахує, скільки днів залишилось до нового року',
 ]
 
 export let ErrorBoundary = Chat
@@ -113,9 +113,17 @@ export default function Chat({ error }) {
 	}
 
 	let onSubmit = useCallback(() => {
-		let context = log.slice(-8).map(({ you, ai }) =>
-			you ? `You: ${you}` : `AI: ${ai}`
-		).join('\n')
+		let len = prompt.length
+		let context = []
+		for (let i = 1; i <= 6; i++) {
+			let j = log.length - i
+			if (j < 0) break
+			let { you, ai } = log[j]
+			len += (you || ai || '').length
+			if (len > 2000) break
+			context.push(you ? `You: ${you}` : ai ? `AI: ${ai}` : '')
+		}
+		context = context.reverse().join('\n')
 		let data = new FormData()
 		data.set('prompt', `${context}\nYou: ${prompt}`)
 		data.set('model', model)
