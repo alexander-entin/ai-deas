@@ -11,8 +11,8 @@ import {
 import styles from "./tailwind.css"
 
 let title = `ChatGPT солов'їною`
-let description = 'ChatGPT для українців без зайвого клопоту - без VPN, SMS, реэстрації'
-let image = 'https://ai-deas.pages.dev/favicon.svg'
+let description = 'ChatGPT для українців без зайвого клопоту - без VPN, SMS, реєстрації'
+let image = 'https://ai-deas.pages.dev/logo.png'
 export const meta: MetaFunction = () => ({
 	title,
 	description,
@@ -22,7 +22,7 @@ export const meta: MetaFunction = () => ({
 	'twitter:title': title,
 	'twitter:description': description,
 	'twitter:image': image,
-	'twitter:card': 'summary_large_image',
+	'twitter:card': 'summary',
 	charset: 'utf-8',
 	viewport: 'width=device-width,initial-scale=1',
 	'mobile-web-app-capable': 'yes',
@@ -31,7 +31,7 @@ export const meta: MetaFunction = () => ({
 
 export const links: LinksFunction = () => [
 	{ rel: "stylesheet", href: styles },
-	{ rel: 'icon', href: '/favicon.svg', type: 'image/svg' },
+	{ rel: 'icon', href: '/logo.png', type: 'image/png' },
 ]
 
 export default function App() {

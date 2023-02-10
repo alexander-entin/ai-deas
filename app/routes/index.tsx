@@ -175,18 +175,18 @@ export default function Chat({ error }) {
 				}
 				<div className="flex-1 overflow-auto">
 					<div className="hero">
-						<div className="hero-content flex-row">
-							<img
-								src="/favicon.svg"
-								className="flex-none w-20 h-20"
-								alt=""
-							/>
-							<div className="prose">
-								<h1>ChatGPT солов'їною</h1>
-								<p>OpenAI, розробник ChatGPT, <a href="https://forbes.ua/news/amerikanskiy-openai-poyasniv-chomu-zablokuvav-nadpopulyarniy-shi-servis-chatgpt-dlya-ukraintsiv-18012023-11148">заблокував</a> українцям доступ до свого текстового ШІ-чатботу.</p>
-								<p>Існуючі <a href="https://psm7.com/uk/technology/kak-vospolzovatsya-chatgpt-v-ukraine-obxod-blokirovki-openai.html">способи обходу</a> блокування неідеальні.</p>
-								<p>На цьому сайті Ви можете користуватися ChatGPT без зайвого клопоту.</p>
-							</div>
+						<div className="prose">
+							<h1 className="pt-3">
+								<img src="/logo.svg" className="inline m-0 w-16 h-16" alt="" />
+								<span className="pl-2">ChatGPT солов'їною</span>
+							</h1>
+							<p>
+								OpenAI, розробник ChatGPT, <a href="https://forbes.ua/news/amerikanskiy-openai-poyasniv-chomu-zablokuvav-nadpopulyarniy-shi-servis-chatgpt-dlya-ukraintsiv-18012023-11148">заблокував</a> українцям доступ до свого текстового ШІ-чатботу.
+								Існуючі <a href="https://psm7.com/uk/technology/kak-vospolzovatsya-chatgpt-v-ukraine-obxod-blokirovki-openai.html">способи обходу</a> блокування неідеальні.
+							</p>
+							<p>
+								Тут українці можуть користуватися ChatGPT без зайвого клопоту - без VPN, SMS, реєстрації.
+							</p>
 						</div>
 					</div>
 					<div className="md:container">
