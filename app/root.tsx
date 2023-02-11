@@ -12,6 +12,7 @@ let image = `https://aideas.win${logo512}`
 export const meta: MetaFunction = () => ({
 	title,
 	description,
+	'og:url': 'https://aideas.win',
 	'og:title': `ChatGPT солов'їною`,
 	'og:description': description,
 	'og:image': image,
