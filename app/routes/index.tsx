@@ -87,7 +87,7 @@ export default function Chat({ error }) {
 	let bottomRef = useRef()
 	let promptRef = useRef()
 
-	console.log({ prompt, model, temperature, log, last, submission, res, error })
+	// console.log({ prompt, model, temperature, log, last, submission, res, error })
 
 	let prettify = () => {
 		setTimeout(() => {
@@ -245,7 +245,7 @@ export default function Chat({ error }) {
 								{you &&
 									<div className="chat chat-end">
 										<div className="chat-bubble chat-bubble-secondary">
-											<pre>{you}</pre>
+											{you}
 										</div>
 									</div>
 								}

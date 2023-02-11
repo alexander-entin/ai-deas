@@ -20,13 +20,13 @@ export let loader: LoaderFunction = () => {
 				{
 					src: logo,
 					type: "image/svg+xml",
-					sizes: "all",
+					sizes: "any",
 				},
 				{
 					src: logo192,
 					type: "image/png",
 					sizes: "192x192",
-					purpose: "any maskable",
+					purpose: "maskable",
 				},
 				{
 					src: logo512,

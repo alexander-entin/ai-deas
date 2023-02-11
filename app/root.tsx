@@ -1,12 +1,5 @@
 import type { MetaFunction, LinksFunction } from "@remix-run/cloudflare"
-import {
-	Links,
-	LiveReload,
-	Meta,
-	Outlet,
-	Scripts,
-	ScrollRestoration,
-} from "@remix-run/react"
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react"
 
 import styles from "./tailwind.css"
 import logo from "~/../public/logo.svg"
@@ -41,11 +34,6 @@ export const links: LinksFunction = () => [
 	{ rel: 'apple-touch-icon', href: logo192 },
 ]
 
-function onCssPreload() {
-	this.onload = null
-	this.rel = 'stylesheet'
-}
-
 export default function App() {
 	return (
 		<html lang="uk" className="h-screen">
@@ -59,12 +47,12 @@ export default function App() {
 				<ScrollRestoration />
 				<Scripts />
 				<LiveReload />
-				<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" crossOrigin="anonymous" referrerPolicy="no-referrer" as="style" onLoad={onCssPreload} />
-				<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" crossOrigin="anonymous" referrerPolicy="no-referrer"></script>
-				<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" crossOrigin="anonymous" referrerPolicy="no-referrer"></script>
-				<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" crossOrigin="anonymous" referrerPolicy="no-referrer" as="style" onLoad={onCssPreload} />
-				<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js" crossOrigin="anonymous" referrerPolicy="no-referrer"></script>
-				<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js" crossOrigin="anonymous" referrerPolicy="no-referrer"></script>
+				<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" crossOrigin="anonymous"></script>
+				<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" crossOrigin="anonymous" />
+				<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" crossOrigin="anonymous"></script>
+				<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js" crossOrigin="anonymous"></script>
+				<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" crossOrigin="anonymous" />
+				<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js" crossOrigin="anonymous"></script>
 			</body>
 		</html>
 	)
