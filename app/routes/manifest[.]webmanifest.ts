@@ -3,7 +3,7 @@ import type { LoaderFunction } from "@remix-run/cloudflare"
 
 import logo from "~/../public/logo.svg"
 import logo192 from "~/../public/logo-192x192-o.png"
-import logo300 from "~/../public/logo-300x300-t.png"
+import logo384 from "~/../public/logo-384x384-o.png"
 import logo512 from "~/../public/logo-512x512-m.png"
 
 export let loader: LoaderFunction = () => {
@@ -29,9 +29,9 @@ export let loader: LoaderFunction = () => {
 					sizes: "192x192",
 				},
 				{
-					src: logo300,
+					src: logo384,
 					type: "image/png",
-					sizes: "300x300",
+					sizes: "384x384",
 				},
 				{
 					src: logo512,
