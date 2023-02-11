@@ -47,6 +47,7 @@ export default function App() {
 		<html lang="uk" className="h-screen">
 			<head>
 				<Meta />
+				<link rel="manifest" href="/manifest.webmanifest" />
 				<Links />
 			</head>
 			<body className="h-screen bg-white">
