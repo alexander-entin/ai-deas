@@ -9,11 +9,13 @@ import {
 } from "@remix-run/react"
 
 import styles from "./tailwind.css"
-import logo from "~/../public/logo.png"
+import logo from "~/../public/logo.svg"
+import logo192 from "~/../public/logo-192x192-mask.png"
+import logo512 from "~/../public/logo-512x512.png"
 
 let title = `ChatGPT солов'їною`
 let description = 'ChatGPT для українців без зайвого клопоту - без VPN, SMS, реєстрації'
-let image = `https://ai-deas.pages.dev${logo}`
+let image = `https://aideas.win${logo512}`
 export const meta: MetaFunction = () => ({
 	title,
 	description,
@@ -28,13 +30,15 @@ export const meta: MetaFunction = () => ({
 	'twitter:card': 'summary',
 	charset: 'utf-8',
 	viewport: 'width=device-width,initial-scale=1',
+	'theme-color': '#373737',
 	'mobile-web-app-capable': 'yes',
 	'apple-mobile-web-app-capable': 'yes',
 })
 
 export const links: LinksFunction = () => [
 	{ rel: "stylesheet", href: styles },
-	{ rel: 'icon', href: logo, type: 'image/png' },
+	{ rel: 'icon', href: logo },
+	{ rel: 'apple-touch-icon', href: logo192 },
 ]
 
 function onCssPreload() {
