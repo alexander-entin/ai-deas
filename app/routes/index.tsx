@@ -276,7 +276,7 @@ export default function Chat({ error }) {
 					</div>
 				</div>
 				<div className="md:container flex items-end p-2">
-					<label htmlFor="chat" className="sr-only">
+					<label htmlFor="prompt" className="sr-only">
 						Ваше повідомлення
 					</label>
 					<TextArea
@@ -323,10 +323,11 @@ export default function Chat({ error }) {
 					{() =>
 						<div className="bg-base-300 w-80 p-4">
 							<div className="form-control">
-								<label className="label">
+								<label className="label" htmlFor="model">
 									<span className="label-text">Модель</span>
 								</label>
 								<select
+									id="model"
 									name="model"
 									value={model}
 									onChange={e => setModel(e.target.value)}
@@ -343,10 +344,11 @@ export default function Chat({ error }) {
 								</select>
 							</div>
 							<div className="form-control">
-								<label className="label">
+								<label className="label" htmlFor="range">
 									<span className="label-text">Температура</span>
 								</label>
 								<input
+									id="range"
 									type="range"
 									name="temperature"
 									value={temperature}
