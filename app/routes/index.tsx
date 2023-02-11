@@ -113,6 +113,8 @@ export default function Chat({ error }) {
 	}
 
 	let onSubmit = useCallback(() => {
+		prompt = prompt.trim()
+		if (!prompt) return
 		let len = prompt.length
 		let context = []
 		for (let i = 1; i <= 6; i++) {
@@ -264,7 +266,7 @@ export default function Chat({ error }) {
 							<>
 								<div className="chat chat-end">
 									<div className="chat-bubble chat-bubble-secondary">
-										<pre>{prompt}</pre>
+										{prompt}
 									</div>
 								</div>
 								<div className="chat chat-start">
@@ -275,7 +277,7 @@ export default function Chat({ error }) {
 						<div ref={bottomRef} />
 					</div>
 				</div>
-				<div className="md:container flex items-end p-2">
+				<div className="md:container flex items-end p-1">
 					<label htmlFor="prompt" className="sr-only">
 						Ваше повідомлення
 					</label>
@@ -287,7 +289,7 @@ export default function Chat({ error }) {
 						className="flex-1 max-w-full chat-bubble focus:outline-none"
 						rows={1}
 						minRows={1}
-						maxRows={4}
+						maxRows={5}
 						maxLength={500}
 						placeholder="Ваше повідомлення..."
 						autoFocus
@@ -295,26 +297,31 @@ export default function Chat({ error }) {
 						onKeyDown={onKey}
 						ref={promptRef}
 					/>
-					<button
-						type="submit"
-						className="inline-flex p-2.5 text-neutral-content rounded-full cursor-pointer"
-						disabled={!!submission}
-					>
-						<BiSend className="w-6 h-6" />
-						<span className="sr-only">Send message</span>
-					</button>
-					<label htmlFor="drawer" className="drawer-button inline-flex p-2.5 text-neutral-content rounded-full cursor-pointer">
-						<BiCog className="w-6 h-6" />
-						<span className="sr-only">Settings</span>
-					</label>
-					<button
-						type="button"
-						className="inline-flex p-2.5 text-neutral-content rounded-full cursor-pointer"
-						onClick={onClear}
-					>
-						<BiTrash className="w-6 h-6" />
-						<span className="sr-only">Clear conversation</span>
-					</button>
+					<div className="flex flex-col absolute bottom-0 right-0 p-1.5 pr-0.5">
+						<button
+							type="button"
+							className="p-2 text-neutral-content rounded-full cursor-pointer"
+							onClick={onClear}
+						>
+							<BiTrash className="w-6 h-6" />
+							<span className="sr-only">Clear conversation</span>
+						</button>
+						<label
+							htmlFor="drawer"
+							className="drawer-button p-2 text-neutral-content rounded-full cursor-pointer"
+						>
+							<BiCog className="w-6 h-6" />
+							<span className="sr-only">Settings</span>
+						</label>
+						<button
+							type="submit"
+							className="p-2 text-neutral-content rounded-full cursor-pointer"
+							disabled={!!submission}
+						>
+							<BiSend className="w-6 h-6" />
+							<span className="sr-only">Send message</span>
+						</button>
+					</div>
 				</div>
 			</div>
 			<div className="drawer-side">
