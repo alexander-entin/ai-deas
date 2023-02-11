@@ -3,12 +3,12 @@ import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from "@re
 
 import styles from "./tailwind.css"
 import logo from "~/../public/logo.svg"
-import logo192 from "~/../public/logo-192x192-mask.png"
-import logo512 from "~/../public/logo-512x512.png"
+import logo192 from "~/../public/logo-192x192-o.png"
+import logo300 from "~/../public/logo-300x300-t.png"
 
 let title = `ChatGPT солов'їною`
 let description = 'ChatGPT для українців без зайвого клопоту - без VPN, SMS, реєстрації'
-let image = `https://aideas.win${logo512}`
+let image = `https://aideas.win${logo300}`
 export const meta: MetaFunction = () => ({
 	title,
 	description,

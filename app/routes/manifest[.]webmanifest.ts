@@ -2,8 +2,9 @@ import { json } from "@remix-run/cloudflare"
 import type { LoaderFunction } from "@remix-run/cloudflare"
 
 import logo from "~/../public/logo.svg"
-import logo192 from "~/../public/logo-192x192-mask.png"
-import logo512 from "~/../public/logo-512x512.png"
+import logo192 from "~/../public/logo-192x192-o.png"
+import logo300 from "~/../public/logo-300x300-t.png"
+import logo512 from "~/../public/logo-512x512-m.png"
 
 export let loader: LoaderFunction = () => {
 	return json(
@@ -26,12 +27,17 @@ export let loader: LoaderFunction = () => {
 					src: logo192,
 					type: "image/png",
 					sizes: "192x192",
-					purpose: "maskable",
+				},
+				{
+					src: logo300,
+					type: "image/png",
+					sizes: "300x300",
 				},
 				{
 					src: logo512,
 					type: "image/png",
 					sizes: "512x512",
+					purpose: "any maskable",
 				},
 			],
 		},
