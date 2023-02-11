@@ -198,7 +198,7 @@ export default function Chat({ error }) {
 						</div>
 					</div>
 				}
-				<div className="flex-1 overflow-auto">
+				<div className="flex-1 overflow-auto scrollbar-thin">
 					<div className="md:container">
 						<div className="chat chat-start">
 							<div className="chat-bubble">
@@ -286,7 +286,7 @@ export default function Chat({ error }) {
 						name="prompt"
 						value={submission ? '' : prompt}
 						onChange={e => setPrompt(e.target.value)}
-						className="flex-1 max-w-full chat-bubble focus:outline-none"
+						className="flex-1 max-w-full chat-bubble scrollbar-thin focus:outline-none"
 						rows={1}
 						minRows={1}
 						maxRows={5}

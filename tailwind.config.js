@@ -8,7 +8,11 @@ module.exports = {
 			padding: '2rem',
 		},
 	},
-	plugins: [require("@tailwindcss/typography"), require("daisyui")],
+	plugins: [
+		require("@tailwindcss/typography"),
+		require("daisyui"),
+		require('tailwind-scrollbar'),
+	],
 	daisyui: {
 		themes: ["halloween"],
 	},
