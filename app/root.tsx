@@ -30,6 +30,7 @@ export const meta: MetaFunction = () => ({
 	viewport: 'width=device-width,initial-scale=1',
 	'mobile-web-app-capable': 'yes',
 	'apple-mobile-web-app-capable': 'yes',
+	'theme-color': '#d3d3d3',
 })
 
 export const links: LinksFunction = () => [
@@ -47,6 +48,7 @@ export default function App() {
 		<html lang="uk" className="h-screen">
 			<head>
 				<Meta />
+				<link rel="manifest" href="/resources/manifest.webmanifest" />
 				<Links />
 			</head>
 			<body className="h-screen bg-white">
