@@ -8,6 +8,7 @@ import { Form, useActionData, useSubmit, useTransition } from '@remix-run/react'
 import { ClientOnly } from 'remix-utils'
 import Markdown from 'markdown-to-jsx'
 import { BiCog, BiSend, BiTrash, BiErrorAlt } from 'react-icons/bi'
+import AdSense from 'react-adsense'
 
 import fetch from '~/tools/fetch'
 import get from '~/tools/get'
@@ -131,8 +132,12 @@ export default function Chat({ error }) {
 		data.set('model', model)
 		data.set('temperature', temperature)
 		submit(data, { method: "post", replace: true })
+		// console.log('ad', log.length, log.length % 4)
+		// if (log.length && (log.length % 4) <= 1) {
+		// 	setLog([...log, { ad: 1 }])
+		// }
 		prettify()
-	}, [prompt, model, temperature, log, submit])
+	}, [prompt, model, temperature, log, setLog, submit])
 
 	let onKey = useCallback(e => {
 		if (e.key === 'ArrowUp' && prompt === '') {
@@ -242,7 +247,7 @@ export default function Chat({ error }) {
 								</div>
 							</>
 						}
-						{log.map(({ you, ai }, i) =>
+						{log.map(({ you, ai, ad }, i) =>
 							<Fragment key={i}>
 								{you &&
 									<div className="chat chat-end">
@@ -257,6 +262,18 @@ export default function Chat({ error }) {
 											<div className="prose">
 												<Markdown>{ai}</Markdown>
 											</div>
+										</div>
+									</div>
+								}
+								{ad &&
+									<div className="chat chat-start">
+										<div className="chat-bubble">
+											<AdSense.Google
+												client="ca-pub-6409897183054012"
+												slot="9024127096"
+												layoutKey="-6v+ed+2i-1n-4w"
+												format="fluid"
+											/>
 										</div>
 									</div>
 								}
