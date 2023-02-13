@@ -8,7 +8,6 @@ import { Form, useActionData, useSubmit, useTransition } from '@remix-run/react'
 import { ClientOnly } from 'remix-utils'
 import Markdown from 'markdown-to-jsx'
 import { BiCog, BiSend, BiTrash, BiErrorAlt } from 'react-icons/bi'
-import AdSense from 'react-adsense'
 
 import fetch from '~/tools/fetch'
 import get from '~/tools/get'
@@ -199,10 +198,6 @@ export default function Chat({ error }) {
 		data.set('model', model)
 		data.set('temperature', temperature)
 		submit(data, { method: "post", replace: true })
-		// console.log('ad', log.length, log.length % 4)
-		// if (log.length && (log.length % 4) <= 1) {
-		// 	setLog([...log, { ad: 1 }])
-		// }
 		prettify()
 	}, [prompt, model, temperature, log, setLog, submit])
 
@@ -210,10 +205,6 @@ export default function Chat({ error }) {
 		if (e.key === 'ArrowUp' && prompt === '') {
 			e.preventDefault()
 			setPrompt(last)
-			// setTimeout(() => {
-			// 	promptRef.current.selectionStart = 1e3
-			// 	promptRef.current.selectionEnd = 1e3
-			// }, 1)
 		} else if (e.which === 13 && !e.shiftKey) {
 			e.preventDefault()
 			if (!submission) {
@@ -229,8 +220,6 @@ export default function Chat({ error }) {
 			prettify()
 		}
 	}, [res, error])
-
-	// rest = JSON.stringify(rest, null, 2).split('\n').slice(1, -1).map(x => x.slice(2)).join('\n')
 
 	return (
 		<Form
@@ -258,13 +247,6 @@ export default function Chat({ error }) {
 								</div>
 								<div className="collapse-content p-0 pt-1 -mb-4">
 									<code>{message}</code>
-									{/* <div>
-										<pre>
-											<code className="scroll-auto">
-												{rest}
-											</code>
-										</pre>
-									</div> */}
 								</div>
 							</div>
 						</div>
@@ -292,18 +274,6 @@ export default function Chat({ error }) {
 										{examples && examples({ onExample })}
 									</Ai>
 								}
-								{/* {ad &&
-									<div className="chat chat-start">
-										<div className="chat-bubble">
-											<AdSense.Google
-												client="ca-pub-6409897183054012"
-												slot="9024127096"
-												layoutKey="-6v+ed+2i-1n-4w"
-												format="fluid"
-											/>
-										</div>
-									</div>
-								} */}
 							</Fragment>
 						)}
 						{submission &&
