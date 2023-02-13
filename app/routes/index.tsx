@@ -1,5 +1,5 @@
 import type { ActionArgs } from '@remix-run/cloudflare'
-import { useEffect, useCallback, useRef, Fragment } from 'react'
+import { useEffect, useCallback, useRef, Fragment, Children } from 'react'
 import { atom, useAtom } from 'jotai'
 import { useLocalStorage } from 'usehooks-ts'
 import TextArea from 'react-textarea-autosize'
@@ -62,17 +62,83 @@ export const action = async ({ request, context }: ActionArgs) => {
 	return json(result, { status })
 }
 
+function You({ children }) {
+	return (
+		<div className="chat chat-end">
+			<div className="chat-bubble chat-bubble-secondary">
+				{children}
+			</div>
+		</div>
+	)
+}
+
+function Ai({ children }) {
+	return (
+		<div className="chat chat-start">
+			<div className="chat-bubble">
+				<div className="prose">
+					{children}
+				</div>
+			</div>
+		</div>
+	)
+}
+
 let examples = [
 	'Що таке правий лібералізм?',
 	'Запропонуй 5 кличок для бойового кота',
 	'Реалізуй Python функцію, яка рахує, скільки днів залишилось до нового року',
 ]
 
+let prolog = [
+	{
+		you: <>
+			OpenAI, розробник ChatGPT, <a className="link" href="https://forbes.ua/news/amerikanskiy-openai-poyasniv-chomu-zablokuvav-nadpopulyarniy-shi-servis-chatgpt-dlya-ukraintsiv-18012023-11148" target="_blank" rel="noreferrer">заблокував</a> українцям доступ до свого текстового ШІ - чатботу. Існуючі способи обходу блокування... <a className="link" href="https://psm7.com/uk/technology/kak-vospolzovatsya-chatgpt-v-ukraine-obxod-blokirovki-openai.html" target="_blank" rel="noreferrer">неідеальні</a>. Що робити?
+		</>
+	},
+	{
+		ai: 'Тут українці можуть користуватися ChatGPT без зайвого клопоту - без VPN, SMS, реєстрації'
+	},
+	{
+		you: 'І чим цей сайт крашій за Мерліна чи Телеграм-ботів?'
+	},
+	{
+		ai: `Мерлін використовує менш розумну модель (не робіть висновки про ChatGPT по Мерліну), не пам'ятає історію спілкування, та після 11 запитів потрібно платити $19. У ботів ті самі проблеми.`
+	},
+	{
+		you: 'То це безкоштовно чи що?'
+	},
+	{
+		ai: <>
+			ChatGPT API не є безкоштовним. Один запит може коштувати до 1 Арестовича (2-3 грн) в залежності від моделі та контексту. Я не можу платити за всіх. То прошу <a href="https://send.monobank.ua/jar/6vjEGRovZy" target="_blank" rel="noreferrer">ДОНАТИТИ</a>.
+		</>
+	},
+	{
+		you: 'І як цим користуватися? Він дійсно розуміє українську?'
+	},
+	{
+		ai: 'Нажаль, українською він розмовляє не дуже добре. Якщо вмієте, то краще спілкуйтеся англійською. Просто спробуйте щось спитати. Наприклад:',
+		examples: ({ onExample }) => <>
+			<ul>
+				{examples.map((x, i) =>
+					<li
+						className="link"
+						onClick={() => onExample(x)}
+						key={i}
+					>
+						{x}
+					</li>
+				)}
+			</ul>
+		</>
+	}
+]
+
 export let ErrorBoundary = Chat
 
 let promptAtom = atom('')
 let lastAtom = atom('')
-let logAtom = atom([{}])
+let logAtom = atom(prolog)
 
 export default function Chat({ error }) {
 	let [prompt, setPrompt] = useAtom(promptAtom)
@@ -121,7 +187,8 @@ export default function Chat({ error }) {
 		for (let i = 1; i <= 6; i++) {
 			let j = log.length - i
 			if (j < 0) break
-			let { you, ai } = log[j]
+			let { you, ai, examples } = log[j]
+			if (examples) break
 			len += (you || ai || '').length
 			if (len > 2000) break
 			context.push(you ? `You: ${you}` : ai ? `AI: ${ai}` : '')
@@ -205,67 +272,27 @@ export default function Chat({ error }) {
 				}
 				<div className="flex-1 overflow-auto scrollbar-thin">
 					<div className="md:container">
-						<div className="chat chat-start">
-							<div className="chat-bubble">
-								<div className="prose">
-									<h1 className="m-2 pt-2">
-										<img src={logo} className="inline m-0 w-16 h-16" alt="" />
-										<span className="pl-4">ChatGPT солов'їною</span>
-									</h1>
-								</div>
-							</div>
-						</div>
-						{log.length > 0 &&
-							<>
-								<div className="chat chat-end">
-									<div className="chat-bubble chat-bubble-secondary">
-										OpenAI, розробник ChatGPT, <a className="link" href="https://forbes.ua/news/amerikanskiy-openai-poyasniv-chomu-zablokuvav-nadpopulyarniy-shi-servis-chatgpt-dlya-ukraintsiv-18012023-11148">заблокував</a> українцям доступ до свого текстового ШІ-чатботу.
-										<br/>
-										Існуючі способи обходу блокування... <a className="link" href="https://psm7.com/uk/technology/kak-vospolzovatsya-chatgpt-v-ukraine-obxod-blokirovki-openai.html">неідеальні</a>. Що робити?
-									</div>
-								</div>
-								<div className="chat chat-start">
-									<div className="chat-bubble">
-										<div className="prose">
-											<p>
-												Тут українці можуть користуватися ChatGPT без зайвого клопоту - без VPN, SMS, реєстрації.
-											</p>
-											Приклади:
-											<ul>
-												{examples.map((x, i) =>
-													<li
-														className="link"
-														onClick={() => onExample(x)}
-														key={i}
-													>
-														{x}
-													</li>
-												)}
-											</ul>
-										</div>
-									</div>
-								</div>
-							</>
-						}
-						{log.map(({ you, ai, ad }, i) =>
+						<Ai>
+							<h1>
+								<img src={logo} className="inline m-0 w-16 h-16" alt="" />
+								<span className="pl-4">ChatGPT солов'їною</span>
+							</h1>
+						</Ai>
+						{log.map(({ you, ai, examples, ad }, i) =>
 							<Fragment key={i}>
 								{you &&
-									<div className="chat chat-end">
-										<div className="chat-bubble chat-bubble-secondary">
-											{you}
-										</div>
-									</div>
+									<You>{you}</You>
 								}
 								{ai &&
-									<div className="chat chat-start">
-										<div className="chat-bubble">
-											<div className="prose">
-												<Markdown>{ai}</Markdown>
-											</div>
-										</div>
-									</div>
+									<Ai>
+										{typeof (ai) === 'string'
+											? <Markdown>{ai}</Markdown>
+											: ai
+										}
+										{examples && examples({ onExample })}
+									</Ai>
 								}
-								{ad &&
+								{/* {ad &&
 									<div className="chat chat-start">
 										<div className="chat-bubble">
 											<AdSense.Google
@@ -276,19 +303,13 @@ export default function Chat({ error }) {
 											/>
 										</div>
 									</div>
-								}
+								} */}
 							</Fragment>
 						)}
 						{submission &&
 							<>
-								<div className="chat chat-end">
-									<div className="chat-bubble chat-bubble-secondary">
-										{prompt}
-									</div>
-								</div>
-								<div className="chat chat-start">
-									<div className="chat-bubble"><ThreeDots /></div>
-								</div>
+								<You>{prompt}</You>
+								<Ai><ThreeDots /></Ai>
 							</>
 						}
 						<div ref={bottomRef} />
