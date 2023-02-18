@@ -14,6 +14,11 @@ import get from '~/tools/get'
 import ThreeDots from '~/components/ThreeDots'
 import logo from "~/../public/logo.svg"
 
+let obsolete = `
+[ChatGPT тепер можна використовувати в Україні без обхідних шляхів](https://ain.ua/2023/02/18/chatgpt-teper-v-ukrayini/)
+#Переможемо!
+`
+
 const base = 'https://api.openai.com/v1/'
 export const action = async ({ request, context }: ActionArgs) => {
 	let data = await request.formData()
@@ -22,22 +27,9 @@ export const action = async ({ request, context }: ActionArgs) => {
 	let model = data.get('model') || "text-davinci-003"
 	let temperature = +(data.get('temperature') || 0.5)
 
-	// if (prompt?.endsWith('\nYou: 1')) {
-	// 	return json({
-	// 		ai: '# This is an example of markdown\n' +
-	// 			'This sentence is written in *italic*, while this sentence is written in **bold**. \n' +
-	// 			'\n' +
-	// 			'[This is a link](https://www.markdownguide.org/basic-syntax/)\n' +
-	// 			'\n' +
-	// 			"Here's a code block: \n" +
-	// 			'\n' +
-	// 			'```jsx\n' +
-	// 			"const foo = 'bar'; \n" +
-	// 			'console.log(foo); \n' +
-	// 			'```',
-	// 	})
-	// }
-	// if (prompt?.endsWith('\nYou: e')) model = 1
+	return json({
+		ai: obsolete
+	})
 
 	let body = {
 		prompt: `${prompt} (answer in markdown)\nAI:`,
@@ -90,6 +82,9 @@ let examples = [
 ]
 
 let prolog = [
+	{
+		ai: 'UPD: вже не атуально\n' + obsolete
+	},
 	{
 		you: <>
 			OpenAI, розробник ChatGPT, <a className="link" href="https://forbes.ua/news/amerikanskiy-openai-poyasniv-chomu-zablokuvav-nadpopulyarniy-shi-servis-chatgpt-dlya-ukraintsiv-18012023-11148" target="_blank" rel="noreferrer">заблокував</a> українцям доступ до свого текстового ШІ - чатботу. Існуючі способи обходу блокування... <a className="link" href="https://psm7.com/uk/technology/kak-vospolzovatsya-chatgpt-v-ukraine-obxod-blokirovki-openai.html" target="_blank" rel="noreferrer">неідеальні</a>. Що робити?
